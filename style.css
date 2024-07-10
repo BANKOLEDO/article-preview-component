@@ -50,8 +50,8 @@ body {
     border: none;
     border-radius: 50%;
     background-color: var(--grayish-blue);
-    padding: 0.5rem;
-    margin: 0 0 0 5.5rem;
+    padding: 0.7rem;
+    margin: 0 0.6rem 0 2rem;
 }
 
 #facebook-icon, #twitter-icon, #pininteres-icon {
@@ -59,9 +59,12 @@ body {
 }
 
 #card-footer {
+    background-color: white;
     width: 100%;
     height: 4rem;
     border-radius: 0 0 1rem 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 #first-content {
@@ -73,12 +76,18 @@ body {
 
 #second-content {
     display: flex;
+    height: 4rem;
     flex-direction: row;
+    justify-content: space-around;
     align-items: center;
-    padding: 1rem 0 0 0;
-    margin: 0 1rem;
+    padding: 0.5rem 0 0 0;
+    background-color: var(--very-dark-grayish-blue);
+    border-radius: 0 0 1rem 1rem;
 }
 
+#hidden {
+    display: none;
+}
 
 .top_image {
     width: 100%;
@@ -157,10 +166,10 @@ body {
     color: hsl(228, 45%, 44%); 
 }
 
-@media (min-width: 780px) {
+@media (min-width: 900px) {
     #card-container {
-        width: 50rem;
-        height: 20rem;
+        width: 53rem;
+        height: 23rem;
         flex-direction: row;
     }
 
@@ -171,6 +180,7 @@ body {
     }
 
     .content_footer_container{
+        position: relative;
         width: 55%;
         height: 100%;
     }
@@ -182,9 +192,11 @@ body {
     }
 
     #card-footer {
-        border-radius: 0 0 1rem 0;
+        background-color: white;
         width: 100%;
         height: 20%;
+        border-radius: 0 0 1rem 0;
+        z-index: 1;
     }
 
     .feature {
@@ -192,14 +204,52 @@ body {
     }
 
     #first-content {
+        margin: 2rem 0 10rem 0;
         margin: 0 0 0 -2.5rem;
+        background-color: unset;
+        z-index: 3;
     }
 
+    #second-content {
+        position: absolute;
+        top: 13rem;
+        left: 14.5rem;
+        padding: 1rem 3rem;
+        border-radius: 1rem;
+    }
+
+    
+
+    #second-button {
+        display: none;
+    }
     .name_date {
         margin-left: -6rem;
     }
 
-    #second-button {
-        margin-left: 9rem;
+    .arrow {
+        position: absolute;
+        top: 3rem;
+        right: 8rem;
+        width: 2rem;
+        height: 2rem;
+        background-color: var(--very-dark-grayish-blue);
+        border-radius: 0 0 50% 50%; /* Adjusted border-radius to create an arrow-like shape */
+        /* transform: rotate(45deg); */
     }
+
+    .arrow::after {
+        content: '';
+        position: absolute;
+        top: 63%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-left: 1rem solid transparent;
+        border-right: 1rem solid transparent;
+        border-top: 1rem solid var(--very-dark-grayish-blue);
+        transform: translateX(-50%);
+    }
+
+    
 }

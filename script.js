@@ -1,23 +1,72 @@
-const nameDate = document.getElementById("first-content")
-const secondContent = document.getElementById("second-content")
-const cardFooter = document.getElementById("card-footer")
-const firstButton = document.getElementById("first-button")
-const clickedSecondShare = () => {
-    cardFooter.style.backgroundColor = "white";
-    secondContent.innerHTML = '';
-    nameDate.style.display ="";
-}
-const clickedFirstShare = () => {
-    nameDate.style.display = "none";
-    cardFooter.style.backgroundColor = "hsl(217, 19%, 35%)";
-secondContent.innerHTML = `
-        <h2 class="share">SHARE</h2>
-        <a href="#"> <img src="./images/icon-facebook.svg" alt="facebook-icon" id="facebook-icon" ></a>
-        <a href="#"><img src="./images/icon-twitter.svg" alt="twitter-icon" id="twitter-icon"></a>
-        <a href="#"><img src="./images/icon-pinterest.svg" alt="pinterest-icon" id="pinterest-icon"></a>
-        <button id="second-button"><img src="./images/icon-share.svg" alt="" class="share-icon-white"></button>
-`;
-    const secondButton = document.getElementById("second-button");
-    secondButton.addEventListener("click", clickedSecondShare);
-}
-firstButton.addEventListener("click", clickedFirstShare);
+document.addEventListener('DOMContentLoaded', () => {
+    const nameDate = document.getElementById("first-content");
+    const secondContent = document.getElementById("second-content");
+    const cardFooter = document.getElementById("card-footer");
+    const firstButton = document.getElementById("first-button");
+    const hidden = document.getElementById("hidden");
+    const mediaQuery = window.matchMedia('(max-width: 900px)');
+
+    let secondButton;
+
+    const mobileOtherClick = () => {
+        nameDate.style.display = "";
+        hidden.style.display = "";
+        cardFooter.style.backgroundColor = "";
+    }
+
+    const desktopOtherClick = () => {
+        nameDate.style.display = "";
+        hidden.style.display = "";
+        cardFooter.style.backgroundColor = "";
+    }
+
+    const mobileInitialClick = () => {
+        nameDate.style.display = "none";
+        hidden.style.display = "block";
+        secondButton = document.getElementById("second-button");
+        secondButton.addEventListener("click", mobileOtherClick);
+    }
+
+    const desktopInitialClick = () => {
+        if (hidden.style.display === "block") {
+            hidden.style.display = "none";
+        } else {
+            hidden.style.display = "block";
+        }
+    }
+
+    const cleanUpListeners = () => {
+        // clean up events to prevent repetition
+        if (secondButton) {
+            secondButton.removeEventListener("click", mobileOtherClick);
+            secondButton.removeEventListener("click", desktopOtherClick);
+        }
+        firstButton.removeEventListener("click", mobileInitialClick);
+        firstButton.removeEventListener("click", desktopInitialClick);
+    }
+
+    const resetView = () => {
+        // Reset the elements to their default state
+        nameDate.style.display = "";
+        hidden.style.display = "";
+        cardFooter.style.backgroundColor = "";
+    }
+
+    const handleMediaQueryChange = (event) => {
+        cleanUpListeners();
+        resetView();
+        
+        if (event.matches) {
+            // Mobile view
+            firstButton.addEventListener("click", mobileInitialClick);
+        } else {
+            // Desktop view
+            firstButton.addEventListener("click", desktopInitialClick);
+        }
+    }
+
+    // Initial check
+    handleMediaQueryChange(mediaQuery);
+    // Listen for changes
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+});
